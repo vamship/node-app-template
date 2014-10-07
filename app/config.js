@@ -149,7 +149,7 @@ module.exports = {
                 label: 'app'
             },
             DailyRotateFile: {
-                level: 'info',
+                level: 'debug',
                 filename: _path.join(app.get('cfg_logs_dir'), 'app'),
                 datePattern: '.yyyy-MM-dd.log'
             }
