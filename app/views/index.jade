@@ -1,0 +1,7 @@
+extends layout
+block content
+	div(data-ng-controller='GreetingController')
+		span(data-greeting-directive, message='message')
+		button(data-ng-click='shout()') Shout Out!
+
+block scripts

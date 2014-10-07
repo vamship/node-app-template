@@ -1,0 +1,69 @@
+{
+  "name": "app-template",
+  "version": "0.0.1",
+  "description": "Starter template for web apps that use ExpressJS/Jade, RequireJS and AngularJS",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install; ./node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
+    "dev": "export NODE_ENV=dev;nodemon app/server -e js,jade --config app/deploy_config.json",
+    "start": "export NODE_ENV=prod;node app/server --config app/deploy_config.json",
+    "test": "grunt"
+  },
+  "keywords": [
+    "mindapp",
+    "template",
+    "mindtap"
+  ],
+  "author": "Vamshi K Ponnapalli",
+  "devDependencies": {
+    "chai-as-promised": "^4.1.1",
+    "grunt": "^0.4.5",
+    "grunt-angular-templates": "^0.5.5",
+    "grunt-bump": "0.0.14",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-compass": "^0.8.0",
+    "grunt-contrib-compress": "^0.12.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-express-server": "^0.4.17",
+    "grunt-jsbeautifier": "^0.2.7",
+    "grunt-karma": "^0.8.3",
+    "grunt-mocha-test": "^0.11.0",
+    "grunt-prettysass": "^0.2.3",
+    "grunt-protractor-runner": "^1.0.0",
+    "jshint-stylish": "^0.2.0",
+    "karma-chai-sinon": "^0.1.3",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-coverage": "^0.2.5",
+    "karma-mocha": "^0.1.4",
+    "karma-mocha-reporter": "^0.2.7",
+    "karma-ng-html2js-preprocessor": "git+https://github.com/vamship/karma-ng-html2js-preprocessor.git",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-requirejs": "^0.2.2",
+    "load-grunt-tasks": "^0.4.0",
+    "mocha": "^1.20.1",
+    "node-sass-middleware": "^0.2.0",
+    "sinon": "^1.10.2",
+    "supertest": "^0.13.0",
+    "time-grunt": "^0.3.2",
+    "wysknd-lib": "git+https://github.com/vamship/wysknd-lib.git#v0.0.2"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "dependencies": {
+    "express": "^4.1.2",
+    "jade": "^1.3.1",
+    "morgan": "^1.0.1",
+    "rc": "^0.4.0",
+    "serve-favicon": "^2.0.0",
+    "winston": "^0.8.1"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
