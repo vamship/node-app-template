@@ -30,7 +30,7 @@ _http.createServer(app).listen(app.get('port'), function() {
     var SEPARATOR = (new Array(81)).join('-');
 
     logger.silly(SEPARATOR);
-    logger.info('Express server started. Environment: ');
+    logger.info('Express server started.');
     var settings = _config.getKeys();
     for (var index = 0; index < settings.length; index++) {
         var key = settings[index];
