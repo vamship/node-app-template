@@ -232,6 +232,11 @@ module.exports = function(grunt) {
                 }, {
                     expand: true,
                     cwd: ENV.ROOT.getPath(),
+                    src: [ LOGS.getPath() ],
+                    dest: WORKING.getPath()
+                }, {
+                    expand: true,
+                    cwd: ENV.ROOT.getPath(),
                     src: ['.ebextensions/**'],
                     dest: WORKING.getPath()
                 }, {
