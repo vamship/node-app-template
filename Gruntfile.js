@@ -82,6 +82,9 @@ var HELP_TEXT =
 '                       and minor version numbers can be incremented by          \n' +
 '                       specifying the "major" or "minor" subtask.               \n' +
 '                                                                                \n' +
+'   package           : Prepares the application for deployment by creating a    \n' +
+'                       distribution package.                                    \n' +
+'                                                                                \n' +
 ' Supported Options:                                                             \n' +
 '   --debugMode       : When set to true, forces builds to take place in debug   \n' +
 '                       mode (no minification). This option overrides settings   \n' +
@@ -226,6 +229,11 @@ module.exports = function(grunt) {
                     cwd: APP.getPath(),
                     src: ['**'],
                     dest: BUILD.getPath()
+                }, {
+                    expand: true,
+                    cwd: ENV.ROOT.getPath(),
+                    src: ['.ebextensions/**'],
+                    dest: WORKING.getPath()
                 }, {
                     expand: false,
                     cwd: ENV.ROOT.getPath(),
