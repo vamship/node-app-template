@@ -37,6 +37,8 @@ The project has the following structure.
  |   |--- e2e           [End to end test files]
  |   |--- mocks         [Mocks created to support testing]
  |
+ |--- logs              [Directory for log files]
+ |
  |--- Gruntfile.js      [Grunt configuration file - provides basic tasks]
  |--- package.json      [Package configuration file - basic app info; node dependencies]
  |--- bower.json        [Client side dependency configuration file]
