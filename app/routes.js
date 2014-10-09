@@ -9,6 +9,8 @@
 var _path = require('path');
 var _express = require('express');
 var _favicon = require('serve-favicon');
+var _morgan = require('morgan');
+var _winston = require('winston');
 
 var _public = require('./routes/public');
 
@@ -22,7 +24,6 @@ module.exports = {
      * @param {Object} app  A reference to the express App object.
      */
     apply: function(app) {
-        var enableLogger = app.get('cfg_enable_request_logger');
         var enableDynamicCss = app.get('cfg_enable_dyamic_css_compile');
 
         var staticDir = app.get('cfg_static_dir');
@@ -30,12 +31,15 @@ module.exports = {
         var mountPath = app.get('cfg_mount_path');
         var staticFileCacheDuration = app.get('cfg_static_file_cache_duration');
 
-        // Conditional middlewares.
-        if (enableLogger) {
-            var morgan = require('morgan');
-            app.use(morgan('dev'));
-        }
+        var accessLogger = _winston.loggers.get('access');
+        var winstonStream = {
+            write: function(message, encoding) {
+                accessLogger.info(message);
+            }
+        };
+        app.use(_morgan('dev', { stream: winstonStream }));
 
+        // Conditional middlewares.
         // When injected, dynamically generates css files from sass files.
         // Intended for use in development mode only. Production
         // deployments must pre compile sass --> css prior to deployment.

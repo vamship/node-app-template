@@ -33,7 +33,6 @@ var _configOverrides = {
         var appVersion = app.get('cfg_app_version');
         _setConfig(app, 'cfg_app_version', appVersion + '__' + (new Date()).getTime());
         _setConfig(app, 'cfg_static_file_cache_duration', 0);
-        _setConfig(app, 'cfg_enable_request_logger', true);
         _setConfig(app, 'cfg_enable_dyamic_css_compile', true);
         _setConfig(app, 'cfg_enable_minified_files', false);
     },
@@ -118,7 +117,6 @@ module.exports = {
 
         _setConfig(app, 'cfg_static_file_cache_duration', appConfig.staticFileCacheDuration);
 
-        _setConfig(app, 'cfg_enable_request_logger', false);
         _setConfig(app, 'cfg_enable_dyamic_css_compile', false);
         _setConfig(app, 'cfg_enable_minified_files', true);
 
@@ -141,7 +139,7 @@ module.exports = {
 
         _setConfig(app, 'cfg_mount_path', mountPath);
 
-        // Configure logger.
+        // Logger for application logs.
         _winston.loggers.add('app', {
             console: {
                 level: 'silly',
@@ -154,6 +152,18 @@ module.exports = {
                 datePattern: '.yyyy-MM-dd.log'
             }
         });
+
+        // Logger for access logs
+        _winston.loggers.add('access', {
+            DailyRotateFile: {
+                level: 'debug',
+                filename: _path.join(app.get('cfg_logs_dir'), 'access'),
+                datePattern: '.yyyy-MM-dd.log',
+                json: false,
+                colorize: false
+            }
+        });
+        _winston.loggers.get('app').info('Logger ready!');
     },
 
     /**
