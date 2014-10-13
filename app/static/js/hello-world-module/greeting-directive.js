@@ -10,7 +10,7 @@ define(['angular', './module'], function(angular, moduleName) {
         function() {
             return {
                 restrict: 'EA',
-                templateUrl: '/app-template/js/hello-world-module/greeting.html',
+                templateUrl: '/js/hello-world-module/greeting.html',
                 scope: {
                     message: '='
                 }
