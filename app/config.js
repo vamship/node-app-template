@@ -155,6 +155,9 @@ module.exports = {
 
         // Logger for access logs
         _winston.loggers.add('access', {
+            console: {
+                silent: true
+            },
             DailyRotateFile: {
                 level: 'debug',
                 filename: _path.join(app.get('cfg_logs_dir'), 'access'),

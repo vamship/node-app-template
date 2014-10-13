@@ -34,10 +34,14 @@ module.exports = {
         var accessLogger = _winston.loggers.get('access');
         var winstonStream = {
             write: function(message, encoding) {
-                accessLogger.info(message);
+                // We're piping from Morgan to Winston. There will be an extra
+                // newline character that has to be trimmed.
+                accessLogger.info(message.slice(0, -1));
             }
         };
-        app.use(_morgan('dev', { stream: winstonStream }));
+        app.use(_morgan('common', {
+            stream: winstonStream
+        }));
 
         // Conditional middlewares.
         // When injected, dynamically generates css files from sass files.
