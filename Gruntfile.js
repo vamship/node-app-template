@@ -181,7 +181,7 @@ module.exports = function(grunt) {
     var BUILD = WORKING.app;
 
     var KARMA_PREPROC = {};
-    KARMA_PREPROC[APP.static.js.getChildPath('**/*.html')] = 'ng-html2js';
+    KARMA_PREPROC[APP.static.js.getChildPath('**/*.html')] = [ 'ng-html2js', 'requirejs-wrapper' ];
     KARMA_PREPROC[APP.static.js.getChildPath('**/*.js')] = 'coverage';
 
     /* ------------------------------------------------------------------------
@@ -288,11 +288,13 @@ module.exports = function(grunt) {
         karma: {
             options: {
                 preprocessors: KARMA_PREPROC,
+                requireJsWrapper: {
+                    dependencies: ['angular']
+                },
                 ngHtml2JsPreprocessor: {
                     stripPrefix: 'app/static',
                     prependPrefix: ENV.appRoot,
-                    moduleName: '_testFixtureModule',
-                    requireDeps: ['angular']
+                    moduleName: '_testFixtureModule'
                 },
                 coverageReporter: {
                     type: 'text'
