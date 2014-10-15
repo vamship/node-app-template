@@ -15,10 +15,12 @@ var HELP_TEXT =
 ' includes tasks for linting, building and testing.                              \n' +
 '                                                                                \n' +
 ' Supported Tasks:                                                               \n' +
-'   [default]         : Performs standard pre-checkin activities. Runs           \n' +
+'   [default]         : Performs standard pre-commit/push activities. Runs       \n' +
 '                       jsbeautifier on all source files (html and css files are \n' +
 '                       also beautified), then runs jshint, and then executes all\n' +
-'                       tests against the source files.                          \n' +
+'                       tests against the source files. Consider executing       \n' +
+'                       the test:all:dev task as well to ensure that the         \n' +
+'                       development workflow is not broken.                      \n' +
 '                                                                                \n' +
 '   env               : Provides information regarding the current environment.  \n' +
 '                       This an information only task that does not alter any    \n' +
@@ -67,8 +69,8 @@ var HELP_TEXT =
 '                       read and troubleshoot.                                   \n' +
 '                                                                                \n' +
 '   test:[client|     : Executes tests against source files or build artifacts.  \n' +
-'         server|e2e]:  The type of test to execute is specified by the first    \n' +
-'        [dev|build]    sub target (client/server/e2e), and the files to target  \n' +
+'     server|e2e|all]:  The type of test to execute is specified by the first    \n' +
+'        [dev|build]    sub target (client/server/e2e/all), and the files to test\n' +
 '                       (dev/build) is specified by the second subtarget. The    \n' +
 '                       first sub target is mandatory.                           \n' +
 '                       If the "build" subtarget is specified, sources must      \n' +
@@ -76,6 +78,8 @@ var HELP_TEXT =
 '                       directory.                                               \n' +
 '                       If required by the tests, an instance of express will be \n' +
 '                       started prior to executing the tests.                    \n' +
+'                       If [all] is used as the test type, all three tests       \n' +
+'                       (client, server and e2e) wll be executed.                \n' +
 '                                                                                \n' +
 '   bump:[major|minor]: Updates the version number of the package. By default,   \n' +
 '                       this task only increments the patch version number. Major\n' +
@@ -481,7 +485,7 @@ module.exports = function(grunt) {
 
         /**
          * Configuration for grunt-jsbeautifier, which is used to:
-         *  - Beautify all javascript, html and css files  prior to checkin.
+         *  - Beautify all javascript, html and css files  prior to commit/push.
          */
         jsbeautifier: {
             dev: [ APP.allFilesPattern('js'),
@@ -573,14 +577,14 @@ module.exports = function(grunt) {
      * ---------------------------------------------------------------------- */
 
     /**
-     * Default task. Performs default tasks prior to checkin, including:
+     * Default task. Performs default tasks prior to commit/push, including:
      *  - Beautifying files
      *  - Linting files
      *  - Building sources
      *  - Testing build artifacts
      *  - Cleaning up build results
      */
-    grunt.registerTask('default', [ 'jsbeautifier:dev',
+    grunt.registerTask('default', ['jsbeautifier:dev',
                                     'prettysass:dev',
                                     'jshint:dev',
                                     'build',
@@ -601,6 +605,7 @@ module.exports = function(grunt) {
                                  'test:server:build',
                                  'test:e2e:build',
                                  'compress:default' ]);
+
     /**
      * Test task - executes client only tests, server only tests or end to end
      * tests based on the test type passed in. Tests may be executed against
@@ -634,6 +639,10 @@ module.exports = function(grunt) {
                     grunt.task.run('express:' + target);
                 }
                 grunt.task.run(testAction);
+            } else if(testType === 'all') {
+                grunt.task.run('test:client:' + target);
+                grunt.task.run('test:server:' + target);
+                grunt.task.run('test:e2e:' + target);
             } else {
                 grunt.log.warn('Unrecognized test type or target. Please see help (grunt help) for task usage information');
             }
