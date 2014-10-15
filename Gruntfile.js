@@ -157,9 +157,12 @@ module.exports = function(grunt) {
     ENV.publishArchive = ENV.appName + '_' + ENV.appVersion + '.zip';
 
     // This is the root url prefix for the app, and represents the path
-    // (relative to root), where the app will be available. This value should
-    // remain unchanged for most apps, but can be tweaked here if necessary.
-    ENV.appRoot = '/' + ENV.appName;
+    // (relative to root), where the app will be available.
+    // This value should remain unchanged if the app does not sit behind a
+    // proxy. If a proxy is present (that routes to the app based on URL
+    // values), this value should be tweaked to include the proxy path.
+    ENV.proxyPrefix = ''; //+ ENV.appName;
+
     (function _createTreeRefs(parent, subTree) {
         for(var folder in subTree) {
             var folderName = folder.replace('.', '_');
@@ -293,7 +296,7 @@ module.exports = function(grunt) {
                 },
                 ngHtml2JsPreprocessor: {
                     stripPrefix: 'app/static',
-                    prependPrefix: ENV.appRoot,
+                    prependPrefix: ENV.proxyPrefix,
                     moduleName: '_testFixtureModule'
                 },
                 coverageReporter: {
@@ -417,7 +420,7 @@ module.exports = function(grunt) {
                             script +
                             '}]);\n});';
                 },
-                prefix: ENV.appRoot + '/',
+                prefix: ENV.proxyPrefix + '/'
             },
             helloWorldModule: {
                 cwd: APP.static.getPath(),
