@@ -48,6 +48,7 @@
             //    included in the test scope.
             jquery: 'app/static/lib/jquery/dist/jquery',
             angular: 'app/static/lib/angular/angular',
+            uiRouter: 'app/static/lib/angular-ui-router/release/angular-ui-router',
             bootstrap: 'app/static/lib/bootstrap/dist/js/bootstrap',
             helloWorldModule: 'app/static/js/hello-world-module'
         },
@@ -58,6 +59,9 @@
             angular: {
                 deps: ['jquery'],
                 exports: 'angular'
+            },
+            uiRouter: {
+                deps: ['angular']
             },
             bootstrap: {
                 deps: ['jquery'],

@@ -8,6 +8,7 @@
         paths: {
             jquery: 'lib/jquery/dist/jquery',
             angular: 'lib/angular/angular',
+            uiRouter: 'lib/angular-ui-router/release/angular-ui-router',
             bootstrap: 'lib/bootstrap/dist/js/bootstrap',
 
             helloWorldModule: 'js/hello-world-module'
@@ -20,6 +21,9 @@
             angular: {
                 deps: ['jquery'],
                 exports: 'angular'
+            },
+            uiRouter: {
+                deps: ['angular']
             },
             bootstrap: {
                 deps: ['jquery'],
