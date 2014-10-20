@@ -12,6 +12,7 @@
 
             helloWorldModule: 'js/hello-world-module'
         },
+        wrapShim: true,
         shim: {
             jquery: {
                 exports: '$'

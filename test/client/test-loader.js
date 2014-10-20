@@ -52,6 +52,8 @@
             helloWorldModule: 'app/static/js/hello-world-module'
         },
 
+        wrapShim: true,
+
         shim: {
             angular: {
                 deps: ['jquery'],
