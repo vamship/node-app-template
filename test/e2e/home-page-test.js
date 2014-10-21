@@ -1,5 +1,6 @@
 /* jshint expr:true */
 /* global protractor, browser, element, by */
+var _config = require('../config');
 
 describe('Home page:', function() {
     'use strict';
@@ -11,7 +12,7 @@ describe('Home page:', function() {
 
     var Page = function() {
         this.load = function() {
-            browser.get('/');
+            browser.get(_config.baseUrl + '/');
         };
     };
     var page;

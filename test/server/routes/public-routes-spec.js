@@ -1,11 +1,11 @@
 /* jshint node:true, expr:true */
 'use strict';
+var _config = require('../../config');
 var _supertest = require('supertest');
 var expect = require('chai').expect;
 
 describe('/', function() {
-    var SERVICE_URL = 'http://localhost:3000';
-    var request = _supertest(SERVICE_URL);
+    var request = _supertest(_config.baseUrl);
 
     it('should show the application status when invoked', function(done) {
         request.get('/__status')
