@@ -384,7 +384,7 @@ module.exports = function(grunt) {
                         slow: 2000,
                         timeout: 10000
                     },
-                    browser: 'chrome',
+                    browser: 'firefox',
                     specs: [ TEST.e2e.allFilesPattern('js') ],
                     exclude: [ TEST.e2e.getChildPath('conf/*') ],
                     chromeDriver: './node_modules/grunt-protractor-runner/node_modules/protractor/selenium/chromedriver'
