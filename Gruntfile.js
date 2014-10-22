@@ -589,7 +589,7 @@ module.exports = function(grunt) {
                                     'build',
                                     'test:client:build',
                                     'test:server:build',
-                                    //'test:e2e:build',
+                                    'test:e2e:build',
                                     'clean' ]);
 
     /**
