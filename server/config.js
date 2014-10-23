@@ -94,7 +94,7 @@ module.exports = {
         // Read package info and application configuration settings.
         var packageInfo = _getPackageInfo();
         var appConfig = _getApplicationConfig(packageInfo.name);
-        var staticDir = _path.join(__dirname, 'static');
+        var staticDir = _path.join(__dirname, '../client');
         var env = app.get('env');
 
         // Common application configuration

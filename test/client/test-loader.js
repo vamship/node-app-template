@@ -34,7 +34,7 @@
         // sources function as expected.
         paths: {
             // References required when testing dev and build artifacts.
-            ngMocks: 'app/static/lib/angular-mocks/angular-mocks',
+            ngMocks: 'client/lib/angular-mocks/angular-mocks',
             mocks: 'test/mocks',
             helpers: 'test/client/helpers',
 
@@ -46,11 +46,11 @@
             //  - The only reason that we even need this is because Karma/
             //    PhantomJS is/are looking for paths to point to folders
             //    included in the test scope.
-            jquery: 'app/static/lib/jquery/dist/jquery',
-            angular: 'app/static/lib/angular/angular',
-            uiRouter: 'app/static/lib/angular-ui-router/release/angular-ui-router',
-            bootstrap: 'app/static/lib/bootstrap/dist/js/bootstrap',
-            helloWorldModule: 'app/static/js/hello-world-module'
+            jquery: 'client/lib/jquery/dist/jquery',
+            angular: 'client/lib/angular/angular',
+            uiRouter: 'client/lib/angular-ui-router/release/angular-ui-router',
+            bootstrap: 'client/lib/bootstrap/dist/js/bootstrap',
+            helloWorldModule: 'client/js/hello-world-module'
         },
 
         wrapShim: true,

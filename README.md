@@ -22,15 +22,15 @@ The project has the following structure.
 
 ```
 <ROOT>
- |--- app               [Source files]
- |   |--- static        [All client side resources (styles/scripts/images/etc.)]
- |   |  |--- css        [Stylesheets - regular css or sass (.css/.scss)]
- |   |  |--- js         [Javascript files (.js)]
- |   |  |--- img        [Images]
- |   |  |--- lib        [Third party libraries js/css/fonts/etc; managed via bower]
- |   |
+ |--- server            [Server side files]
  |   |--- views         [Views (jade templates)]
  |   |--- routes        [Express.js route definitions]
+ |
+ |--- client            [All client side resources (styles/scripts/images/etc.)]
+ |   |--- css           [Stylesheets - regular css or sass (.css/.scss)]
+ |   |--- js            [Javascript files (.js)]
+ |   |--- img           [Images]
+ |   |--- lib           [Third party libraries js/css/fonts/etc; managed via bower]
  |
  |--- test              [Test files]
  |   |--- spec          [Unit test files]
@@ -47,7 +47,7 @@ The project has the following structure.
  |--- .gitignore        [List of files to be ignored by git]
 
 ```
-The application and test code is completely self contained within the `app` and `test` directories respectively. All files under `app/static` are client side files that are loaded and executed on the browser. All other JavaScript files are intended to run on the server.
+The application and test code is completely self contained within the `server`, `client` and `test` directories respectively. All files under `client` are client side files that are loaded and executed on the browser. All other JavaScript files are intended to run on the server.
 
 ##RequireJS & AngularJS
 The project template is designed to use both RequireJS and AngularJS on the client side. While AngularJS provides a [dependency injection](https://docs.angularjs.org/guide/di) mechanism to manage dependencies between entities, it expects that all of the dependencies are loaded and available on the page. If we assume that each entitiy is contained in a single file, it will then be up to the developer to ensure that all required files have been included on the page using `<script />` tags.
@@ -57,8 +57,8 @@ RequireJS alleviates the issues relating to the management of file dependencies 
 On the flip side, the use of RequireJS means that additional configuration is required for things such as - management of non AMD files, module definitions, etc. While the cost of creating and managing the configuration is worth the benefit that the paradigm brings to the table, it is nevertheless a task that the developer has to perform during the development process.
 
 Currently, there are separate configuration files for:
-* Normal application execution (`app/static/js/config.js`)
-* Application build (`app/static/js/config.build.js`)
+* Normal application execution (`client/js/config.js`)
+* Application build (`client/js/config.build.js`)
 * Unit testing (`test/spec/spec-loader.js`)
 
 **NOTE:** All three configuration files must be updated when new resources (third party libs) or modules are added to the project. 

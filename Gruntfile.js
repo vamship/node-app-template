@@ -120,15 +120,15 @@ module.exports = function(grunt) {
         appVersion: packageConfig.version || '__UNKNOWN__',
         tree: {                             /* ------------------------------ */
                                             /* <ROOT>                         */
-            'app': {                        /*  |--- app                      */
-                'static': {                 /*  |   |--- static               */
-                    'css': null,            /*  |   |  |--- css               */
-                    'js': null,             /*  |   |  |--- js                */
-                    'img': null,            /*  |   |  |--- img               */
-                    'lib': null             /*  |   |  |--- lib               */
-                },                          /*  |   |                         */
+            'server': {                     /*  |--- server                   */
                 'views': null,              /*  |   |--- views                */
                 'routes': null              /*  |   |--- routes               */
+            },                              /*  |                             */
+            'client': {                     /*  |--- client                   */
+                'css': null,                /*  |   |--- css                  */
+                'js': null,                 /*  |   |--- js                   */
+                'img': null,                /*  |   |--- img                  */
+                'lib': null                 /*  |   |--- lib                  */
             },                              /*  |                             */
             'test': {                       /*  |--- test                     */
                 'client': null,             /*  |   |--- client               */
@@ -138,15 +138,15 @@ module.exports = function(grunt) {
             },                              /*  |                             */
             'logs': null,                   /*  |--- logs                     */
             'working': {                    /*  |--- working                  */
-                'app': {                    /*  |   |--- app                  */
-                    'static': {             /*  |   |   |--- static           */
-                        'css': null,        /*  |   |   |   |--- css          */
-                        'js': null,         /*  |   |   |   |--- js           */
-                        'img': null,        /*  |   |   |   |--- img          */
-                        'lib': null         /*  |   |   |   |--- lib          */
-                    },                      /*  |   |   |                     */
+                'server': {                 /*  |   |--- server               */
                     'views': null,          /*  |   |   |--- views            */
                     'routes': null          /*  |   |   |--- routes           */
+                },                          /*  |   |                         */
+                'client': {                 /*  |   |--- client               */
+                    'css': null,            /*  |   |   |--- css              */
+                    'js': null,             /*  |   |   |--- js               */
+                    'img': null,            /*  |   |   |--- img              */
+                    'lib': null             /*  |   |   |--- lib              */
                 }                           /*  |   |                         */
             },                              /*  |   |                         */
             'coverage': null,               /*  |   |--- coverage             */
@@ -180,16 +180,18 @@ module.exports = function(grunt) {
     })(ENV.ROOT, ENV.tree);
 
     // Shorthand references to key folders.
-    var APP = ENV.ROOT.app;
+    var SERVER = ENV.ROOT.server;
+    var CLIENT = ENV.ROOT.client;
     var TEST = ENV.ROOT.test;
     var LOGS = ENV.ROOT.logs;
     var DIST = ENV.ROOT.dist;
     var WORKING = ENV.ROOT.working;
-    var BUILD = WORKING.app;
+    var SERVER_BUILD = WORKING.server;
+    var CLIENT_BUILD = WORKING.client;
 
     var KARMA_PREPROC = {};
-    KARMA_PREPROC[APP.static.js.getChildPath('**/*.html')] = [ 'ng-html2js', 'requirejs-wrapper' ];
-    KARMA_PREPROC[APP.static.js.getChildPath('**/*.js')] = 'coverage';
+    KARMA_PREPROC[CLIENT.js.getChildPath('**/*.html')] = [ 'ng-html2js', 'requirejs-wrapper' ];
+    KARMA_PREPROC[CLIENT.js.getChildPath('**/*.js')] = 'coverage';
 
     /* ------------------------------------------------------------------------
      * Grunt task configuration
@@ -206,22 +208,22 @@ module.exports = function(grunt) {
             coverage: [ ENV.ROOT.coverage.getPath() ],
             logs: [ LOGS.getChildPath('*') ],
             workingJs: {
-                src: [ BUILD.static.js.allFilesPattern() ],
+                src: [ CLIENT_BUILD.js.allFilesPattern() ],
                 filter: function(path) {
                     return !path.match(/(app.min.js$)|(config.js$)|(require.js$)/);
                 }
             },
             workingStyles: [
-                            BUILD.static.css.allFilesPattern('scss'),
-                            BUILD.static.css.allFilesPattern('css'),
-                            '!' + BUILD.static.css.getChildPath('app.min.css')
+                            CLIENT_BUILD.css.allFilesPattern('scss'),
+                            CLIENT_BUILD.css.allFilesPattern('css'),
+                            '!' + CLIENT_BUILD.css.getChildPath('app.min.css')
                         ],
             workingLib: [
-                            BUILD.static.lib.getPath() + '/*',
-                            '!' + BUILD.static.lib.getChildPath('/requirejs'),
-                            '!' + BUILD.static.lib.getChildPath('/bootstrap'),
-                            BUILD.static.lib.getChildPath('/bootstrap/*'),
-                            '!' + BUILD.static.lib.getChildPath('/bootstrap/dist')
+                            CLIENT_BUILD.lib.getPath() + '/*',
+                            '!' + CLIENT_BUILD.lib.getChildPath('/requirejs'),
+                            '!' + CLIENT_BUILD.lib.getChildPath('/bootstrap'),
+                            CLIENT_BUILD.lib.getChildPath('/bootstrap/*'),
+                            '!' + CLIENT_BUILD.lib.getChildPath('/bootstrap/dist')
                         ]
         },
 
@@ -233,9 +235,14 @@ module.exports = function(grunt) {
             compile: {
                 files: [ {
                     expand: true,
-                    cwd: APP.getPath(),
+                    cwd: SERVER.getPath(),
                     src: ['**'],
-                    dest: BUILD.getPath()
+                    dest: SERVER_BUILD.getPath()
+                }, {
+                    expand: true,
+                    cwd: CLIENT.getPath(),
+                    src: ['**'],
+                    dest: CLIENT_BUILD.getPath()
                 }, {
                     expand: true,
                     cwd: ENV.ROOT.getPath(),
@@ -262,8 +269,8 @@ module.exports = function(grunt) {
         concat: {
             options: {},
             css: {
-                src: BUILD.static.css.allFilesPattern('css'),
-                dest: BUILD.static.css.getChildPath('app.min.css')
+                src: CLIENT_BUILD.css.allFilesPattern('css'),
+                dest: CLIENT_BUILD.css.getChildPath('app.min.css')
             }
         },
 
@@ -299,7 +306,7 @@ module.exports = function(grunt) {
                     dependencies: ['angular']
                 },
                 ngHtml2JsPreprocessor: {
-                    stripPrefix: 'app/static',
+                    stripPrefix: 'client',
                     prependPrefix: ENV.proxyPrefix,
                     moduleName: '_testFixtureModule'
                 },
@@ -321,10 +328,10 @@ module.exports = function(grunt) {
                 options: {
                     files: [
                         TEST.client.getChildPath('test-loader.js'),
-                        APP.static.js.allFilesPattern('html'),
+                        CLIENT.js.allFilesPattern('html'),
 
-                        { pattern: APP.static.lib.allFilesPattern('js'), included: false },
-                        { pattern: APP.static.js.allFilesPattern(), included: false },
+                        { pattern: CLIENT.lib.allFilesPattern('js'), included: false },
+                        { pattern: CLIENT.js.allFilesPattern(), included: false },
                         { pattern: TEST.client.allFilesPattern('js'), included: false },
                         { pattern: TEST.mocks.allFilesPattern(), included: false }
                     ]
@@ -334,17 +341,17 @@ module.exports = function(grunt) {
                 options: {
                     files: [
                         TEST.client.getChildPath('test-loader.js'),
-                        BUILD.static.js.getChildPath('app.min.js'),
+                        CLIENT_BUILD.js.getChildPath('app.min.js'),
 
                         // We're using the libraries from the app folder just
                         // to make sure that test dependencies (like angular-mocks)
                         // are loaded for testing. All of the core libraries will
                         // be minified and loaded from the compiled build file.
                         {
-                            pattern: APP.static.lib.getChildPath('angular-mocks/angular-mocks.js'),
+                            pattern: CLIENT.lib.getChildPath('angular-mocks/angular-mocks.js'),
                             included: false
                         },
-                        { pattern: BUILD.static.js.allFilesPattern('js'), included: false },
+                        { pattern: CLIENT_BUILD.js.allFilesPattern('js'), included: false },
                         { pattern: TEST.client.allFilesPattern('js'), included: false },
                         { pattern: TEST.mocks.allFilesPattern(), included: false }
                     ]
@@ -426,10 +433,10 @@ module.exports = function(grunt) {
                 prefix: ENV.proxyPrefix + '/'
             },
             helloWorldModule: {
-                cwd: APP.static.getPath(),
+                cwd: CLIENT.getPath(),
                 src: [ 'js/hello-world-module/*.html',
                         'js/hello-world-module/**/*.html' ],
-                dest: BUILD.static.js.getChildPath('hello-world-module/templates.js')
+                dest: CLIENT_BUILD.js.getChildPath('hello-world-module/templates.js')
             }
         },
 
@@ -440,10 +447,10 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    mainConfigFile: BUILD.static.js.getChildPath('config.js'),
-                    baseUrl: BUILD.static.getPath(),
+                    mainConfigFile: CLIENT_BUILD.js.getChildPath('config.js'),
+                    baseUrl: CLIENT_BUILD.getPath(),
                     name: 'js/app',
-                    out: BUILD.static.js.getChildPath('app.min.js'),
+                    out: CLIENT_BUILD.js.getChildPath('app.min.js'),
                     preserveLicenseComments: false
                 }
             }
@@ -455,15 +462,15 @@ module.exports = function(grunt) {
          */
         compass: {
             options: {
-                importPath: BUILD.static.css.getPath(),
+                importPath: CLIENT_BUILD.css.getPath(),
                 relativeAssets: true,
                 assetCacheBuster: false,
                 raw: 'Sass::Script::Number.precision = 10\n'
             },
             compile: {
                 options: {
-                    sassDir: BUILD.static.css.getPath(),
-                    cssDir: BUILD.static.css.getPath()
+                    sassDir: CLIENT_BUILD.css.getPath(),
+                    cssDir: CLIENT_BUILD.css.getPath()
                 }
             }
         },
@@ -477,8 +484,8 @@ module.exports = function(grunt) {
                 banner: ENV.bannerText
             },
             compile: {
-                src: BUILD.static.css.getChildPath('app.min.css'),
-                dest: BUILD.static.css.getChildPath('app.min.css')
+                src: CLIENT_BUILD.css.getChildPath('app.min.css'),
+                dest: CLIENT_BUILD.css.getChildPath('app.min.css')
             }
         },
 
@@ -487,11 +494,11 @@ module.exports = function(grunt) {
          *  - Beautify all javascript, html and css files  prior to commit/push.
          */
         jsbeautifier: {
-            dev: [ APP.allFilesPattern('js'),
-                    APP.static.css.allFilesPattern('css'),
-                    APP.static.js.allFilesPattern('html'),
-                    '!' + APP.static.js.getChildPath('require.js'),
-                    '!' + APP.static.lib.allFilesPattern(),
+            dev: [ SERVER.allFilesPattern('js'),
+                    CLIENT.css.allFilesPattern('css'),
+                    CLIENT.js.allFilesPattern('html'),
+                    '!' + CLIENT.js.getChildPath('require.js'),
+                    '!' + CLIENT.lib.allFilesPattern(),
                     TEST.allFilesPattern('js') ]
         },
 
@@ -504,7 +511,7 @@ module.exports = function(grunt) {
                 indent: 4
             },
             dev: {
-                src: [ APP.static.css.allFilesPattern('scss') ]
+                src: [ CLIENT.css.allFilesPattern('scss') ]
             }
         },
 
@@ -519,9 +526,9 @@ module.exports = function(grunt) {
                 jshintrc: true
             },
             dev: [ 'Gruntfile.js',
-                    APP.allFilesPattern('js'),
-                    '!' + APP.static.js.getChildPath('require.js'),
-                    '!' + APP.static.lib.allFilesPattern(),
+                    SERVER.allFilesPattern('js'),
+                    '!' + CLIENT.js.getChildPath('require.js'),
+                    '!' + CLIENT.lib.allFilesPattern(),
                     TEST.allFilesPattern('js') ]
         },
 
@@ -532,7 +539,7 @@ module.exports = function(grunt) {
          */
         watch: {
             allSources: {
-                files: [ APP.allFilesPattern(), TEST.allFilesPattern() ],
+                files: [ SERVER.allFilesPattern(), TEST.allFilesPattern() ],
                 tasks: [ ]
             }
         },
@@ -549,13 +556,13 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     node_env: 'dev',
-                    script: APP.getChildPath('server.js')
+                    script: SERVER.getChildPath('server.js')
                 }
             },
             build: {
                 options: {
                     node_env: 'test',
-                    script: BUILD.getChildPath('server.js')
+                    script: SERVER_BUILD.getChildPath('server.js')
                 }
             }
         },

@@ -11,9 +11,6 @@ node_modules
 # OS/X Directory store
 .DS_Store
 
-# Third party libs installed by bower
-app/static/lib
-
 # Temp directories
 .tmp
 
@@ -26,4 +23,8 @@ logs/*
 .sass-cache
 
 # Any .css files (all styles must be scss, compiled to css).
-app/static/css/*.css
+client/css/*.css
+
+# Third party libs installed by bower
+client/lib/
+
