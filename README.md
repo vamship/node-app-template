@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/vamship/app-template.svg?branch=master)](https://travis-ci.org/vamship/app-template)
 ## App Template
 
 This is a sample application template, for web applications that run on the [Node JS](http://nodejs.org) platform. This template uses the following technologies:
