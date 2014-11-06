@@ -10,8 +10,7 @@ This is a sample application template, for web applications that run on the [Nod
 * [Require JS](http://requirejs.org): Client side file dependency management framework
 * [Angular JS](https://angularjs.org/): Client side application development framework
 * [Bootstrap](http://getbootstrap.com/): Core styles for responsive elements
-* [UI Bootstrap](http://angular-ui.github.io/bootstrap/): Angular JS directives that leverage Bootstrap styles
-
+* [Winston](https://github.com/flatiron/winston): Logging framework.
 
 ###Development Tools
 * [npm](https://www.npmjs.org/): Server side package manager. Manages server side dependencies (node modules).
@@ -34,7 +33,8 @@ The project has the following structure.
  |   |--- lib           [Third party libraries js/css/fonts/etc; managed via bower]
  |
  |--- test              [Test files]
- |   |--- spec          [Unit test files]
+ |   |--- client        [Client side testing files]
+ |   |--- server        [Server side testing files]
  |   |--- e2e           [End to end test files]
  |   |--- mocks         [Mocks created to support testing]
  |
@@ -97,7 +97,7 @@ git init
 ```
 
 ###Gruntfile
-This project template is provided with a Gruntfile that contains task definitions for most common development activities. This includes - linting, testing (spec and e2e), building, and bumping version numbers. It is strongly recommended that the tasks defined in the Gruntfile be leveraged to the maximum extent possible. More information can be obtained by typing:
+This project template is provided with a Gruntfile that contains task definitions for most common development activities. This includes - linting, testing (client, server and e2e), building, and bumping version numbers. It is strongly recommended that the tasks defined in the Gruntfile be leveraged to the maximum extent possible. More information can be obtained by typing:
 ```
 grunt help
 ```
