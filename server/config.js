@@ -23,7 +23,7 @@ GLOBAL.getLogger = function(name) {
 
 function _setConfig(key, value, app) {
     GLOBAL.config[key] = value;
-    if(app) {
+    if (app) {
         app.set(key, value);
     }
 }
@@ -37,7 +37,7 @@ var _configOverrides = {
      * @param {Object} app  A reference to the express App object.
      */
     dev: function(app) {
-        var appVersion = GLOBAL.config['cfg_app_version'];
+        var appVersion = GLOBAL.config.cfg_app_version;
         _setConfig('cfg_app_version', appVersion + '__' + (new Date()).getTime());
         _setConfig('cfg_static_file_cache_duration', 0);
         _setConfig('cfg_enable_dyamic_css_compile', true);
@@ -51,7 +51,7 @@ var _configOverrides = {
      * @param {Object} app  A reference to the express App object.
      */
     test: function(app) {
-        var appVersion = GLOBAL.config['cfg_app_version'];
+        var appVersion = GLOBAL.config.cfg_app_version;
         _setConfig('cfg_app_version', appVersion + '__' + (new Date()).getTime());
         _setConfig('cfg_static_file_cache_duration', 0);
     },
@@ -128,7 +128,7 @@ module.exports = {
         _setConfig('cfg_enable_dyamic_css_compile', false);
         _setConfig('cfg_enable_minified_files', true);
 
-        app.locals.title = GLOBAL.config['cfg_app_name'];
+        app.locals.title = GLOBAL.config.cfg_app_name;
 
         // Apply configuration overrides if any have been defined for the
         // environment.
@@ -139,8 +139,8 @@ module.exports = {
             applyConfigOverrides(app);
         }
 
-        var rootPath = GLOBAL.config['cfg_root_path'];
-        var proxyPresent = GLOBAL.config['cfg_proxy_present'];
+        var rootPath = GLOBAL.config.cfg_root_path;
+        var proxyPresent = GLOBAL.config.cfg_proxy_present;
         var mountPath = proxyPresent ? '/' : rootPath;
 
         _setConfig('cfg_mount_path', mountPath);
@@ -154,7 +154,7 @@ module.exports = {
             },
             DailyRotateFile: {
                 level: 'debug',
-                filename: _path.join(GLOBAL.config['cfg_logs_dir'], 'app'),
+                filename: _path.join(GLOBAL.config.cfg_logs_dir, 'app'),
                 datePattern: '.yyyy-MM-dd.log'
             }
         });
@@ -166,7 +166,7 @@ module.exports = {
             },
             DailyRotateFile: {
                 level: 'debug',
-                filename: _path.join(GLOBAL.config['cfg_logs_dir'], 'access'),
+                filename: _path.join(GLOBAL.config.cfg_logs_dir, 'access'),
                 datePattern: '.yyyy-MM-dd.log',
                 json: false,
                 colorize: false

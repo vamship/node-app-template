@@ -32,8 +32,8 @@ module.exports = {
          * Request for application status.
          */
         router.get('/__status', function(req, res) {
-            var appName = GLOBAL.config['cfg_app_name'];
-            var appVersion = GLOBAL.config['cfg_app_version'];
+            var appName = GLOBAL.config.cfg_app_name;
+            var appVersion = GLOBAL.config.cfg_app_version;
             res.set({
                 'Content-Type': 'application/json',
             });

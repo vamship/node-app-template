@@ -25,7 +25,7 @@ var logger = GLOBAL.getLogger();
 _routes.apply(app);
 
 // Launch server.
-_http.createServer(app).listen(GLOBAL.config['cfg_port'], function() {
+_http.createServer(app).listen(GLOBAL.config.cfg_port, function() {
     var SEPARATOR = (new Array(81)).join('-');
 
     logger.silly(SEPARATOR);

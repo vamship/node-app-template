@@ -23,11 +23,11 @@ module.exports = {
      * @param {Object} app  A reference to the express App object.
      */
     apply: function(app) {
-        var enableDynamicCss = GLOBAL.config['cfg_enable_dyamic_css_compile'];
-        var staticDir = GLOBAL.config['cfg_static_dir'];
-        var rootPath = GLOBAL.config['cfg_root_path'];
-        var mountPath = GLOBAL.config['cfg_mount_path'];
-        var staticFileCacheDuration = GLOBAL.config['cfg_static_file_cache_duration'];
+        var enableDynamicCss = GLOBAL.config.cfg_enable_dyamic_css_compile;
+        var staticDir = GLOBAL.config.cfg_static_dir;
+        var rootPath = GLOBAL.config.cfg_root_path;
+        var mountPath = GLOBAL.config.cfg_mount_path;
+        var staticFileCacheDuration = GLOBAL.config.cfg_static_file_cache_duration;
 
         var accessLogger = GLOBAL.getLogger('access');
         var winstonStream = {
