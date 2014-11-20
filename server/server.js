@@ -9,7 +9,6 @@
 
 var _http = require('http');
 var _express = require('express');
-var _winston = require('winston');
 
 var _routes = require('./routes');
 var _config = require('./config');
@@ -20,21 +19,20 @@ var app = _express();
 _config.apply(app);
 
 // Logger should be initialized by now.
-var logger = _winston.loggers.get('app');
+var logger = GLOBAL.getLogger();
 
 // Route configuration.
 _routes.apply(app);
 
 // Launch server.
-_http.createServer(app).listen(app.get('port'), function() {
+_http.createServer(app).listen(GLOBAL.config['cfg_port'], function() {
     var SEPARATOR = (new Array(81)).join('-');
 
     logger.silly(SEPARATOR);
     logger.info('Express server started.');
-    var settings = _config.getKeys();
-    for (var index = 0; index < settings.length; index++) {
-        var key = settings[index];
-        logger.info('%s = [%s]', key, app.get(key));
-    }
+    var keys = Object.keys(GLOBAL.config);
+    keys.forEach(function(key) {
+        logger.info('%s = [%s]', key, GLOBAL.config[key]);
+    });
     logger.silly(SEPARATOR);
 });

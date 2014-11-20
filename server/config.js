@@ -12,13 +12,20 @@ var _path = require('path');
 var _rc = require('rc');
 var _winston = require('winston');
 
-var _configKeys = {};
+// Global config object to store application level config.
+GLOBAL.config = {};
 
-function _setConfig(app, key, value) {
-    if (!_configKeys.hasOwnProperty(key)) {
-        _configKeys[key] = true;
+// Global mechanism for accessing logs
+GLOBAL.getLogger = function(name) {
+    name = name || 'app';
+    return _winston.loggers.get(name);
+};
+
+function _setConfig(key, value, app) {
+    GLOBAL.config[key] = value;
+    if(app) {
+        app.set(key, value);
     }
-    app.set(key, value);
 }
 
 var _configOverrides = {
@@ -30,11 +37,11 @@ var _configOverrides = {
      * @param {Object} app  A reference to the express App object.
      */
     dev: function(app) {
-        var appVersion = app.get('cfg_app_version');
-        _setConfig(app, 'cfg_app_version', appVersion + '__' + (new Date()).getTime());
-        _setConfig(app, 'cfg_static_file_cache_duration', 0);
-        _setConfig(app, 'cfg_enable_dyamic_css_compile', true);
-        _setConfig(app, 'cfg_enable_minified_files', false);
+        var appVersion = GLOBAL.config['cfg_app_version'];
+        _setConfig('cfg_app_version', appVersion + '__' + (new Date()).getTime());
+        _setConfig('cfg_static_file_cache_duration', 0);
+        _setConfig('cfg_enable_dyamic_css_compile', true);
+        _setConfig('cfg_enable_minified_files', false);
     },
 
     /**
@@ -44,9 +51,9 @@ var _configOverrides = {
      * @param {Object} app  A reference to the express App object.
      */
     test: function(app) {
-        var appVersion = app.get('cfg_app_version');
-        _setConfig(app, 'cfg_app_version', appVersion + '__' + (new Date()).getTime());
-        _setConfig(app, 'cfg_static_file_cache_duration', 0);
+        var appVersion = GLOBAL.config['cfg_app_version'];
+        _setConfig('cfg_app_version', appVersion + '__' + (new Date()).getTime());
+        _setConfig('cfg_static_file_cache_duration', 0);
     },
 
     /**
@@ -97,32 +104,31 @@ module.exports = {
         var staticDir = _path.join(__dirname, '../client');
         var env = app.get('env');
 
-        // Common application configuration
-        _setConfig(app, 'port', appConfig.port);
-        _setConfig(app, 'views', _path.join(__dirname, 'views'));
-        _setConfig(app, 'view engine', 'jade');
+        // Common application configuration (also updates express settings)
+        _setConfig('views', _path.join(__dirname, 'views'), app);
+        _setConfig('view engine', 'jade', app);
 
-        _setConfig(app, 'cfg_env', env);
-        _setConfig(app, 'cfg_app_name', packageInfo.name);
-        _setConfig(app, 'cfg_app_version', packageInfo.version);
+        // Other, configuration settings, not updating express.
+        _setConfig('cfg_env', env);
+        _setConfig('cfg_port', appConfig.port);
+        _setConfig('cfg_app_name', packageInfo.name);
+        _setConfig('cfg_app_version', packageInfo.version);
 
-        _setConfig(app, 'cfg_static_dir', staticDir);
-        _setConfig(app, 'cfg_logs_dir', appConfig.logsDir);
-        _setConfig(app, 'cfg_proxy_present', appConfig.proxyPresent);
-        _setConfig(app, 'cfg_root_path', appConfig.rootPath);
+        _setConfig('cfg_static_dir', staticDir);
+        _setConfig('cfg_logs_dir', appConfig.logsDir);
+        _setConfig('cfg_proxy_present', appConfig.proxyPresent);
+        _setConfig('cfg_root_path', appConfig.rootPath);
 
         // HACK: Just to make sure that this setting shows at this position in
         // the logs. Actual value gets overwritten later.
-        _setConfig(app, 'cfg_mount_path', appConfig.rootPath);
+        _setConfig('cfg_mount_path', appConfig.rootPath);
 
-        _setConfig(app, 'cfg_static_file_cache_duration', appConfig.staticFileCacheDuration);
+        _setConfig('cfg_static_file_cache_duration', appConfig.staticFileCacheDuration);
 
-        _setConfig(app, 'cfg_enable_dyamic_css_compile', false);
-        _setConfig(app, 'cfg_enable_minified_files', true);
+        _setConfig('cfg_enable_dyamic_css_compile', false);
+        _setConfig('cfg_enable_minified_files', true);
 
-
-
-        app.locals.title = app.get('cfg_app_name');
+        app.locals.title = GLOBAL.config['cfg_app_name'];
 
         // Apply configuration overrides if any have been defined for the
         // environment.
@@ -133,11 +139,11 @@ module.exports = {
             applyConfigOverrides(app);
         }
 
-        var rootPath = app.get('cfg_root_path');
-        var proxyPresent = app.get('cfg_proxy_present');
+        var rootPath = GLOBAL.config['cfg_root_path'];
+        var proxyPresent = GLOBAL.config['cfg_proxy_present'];
         var mountPath = proxyPresent ? '/' : rootPath;
 
-        _setConfig(app, 'cfg_mount_path', mountPath);
+        _setConfig('cfg_mount_path', mountPath);
 
         // Logger for application logs.
         _winston.loggers.add('app', {
@@ -148,7 +154,7 @@ module.exports = {
             },
             DailyRotateFile: {
                 level: 'debug',
-                filename: _path.join(app.get('cfg_logs_dir'), 'app'),
+                filename: _path.join(GLOBAL.config['cfg_logs_dir'], 'app'),
                 datePattern: '.yyyy-MM-dd.log'
             }
         });
@@ -160,22 +166,12 @@ module.exports = {
             },
             DailyRotateFile: {
                 level: 'debug',
-                filename: _path.join(app.get('cfg_logs_dir'), 'access'),
+                filename: _path.join(GLOBAL.config['cfg_logs_dir'], 'access'),
                 datePattern: '.yyyy-MM-dd.log',
                 json: false,
                 colorize: false
             }
         });
         _winston.loggers.get('app').info('Logger ready!');
-    },
-
-    /**
-     * Retrieves all configuration settings keys defined within this module.
-     *
-     * @return {Array} An array of keys that represent configuration settings
-     *                 for the app.
-     */
-    getKeys: function() {
-        return Object.keys(_configKeys);
     }
 }

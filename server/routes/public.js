@@ -10,10 +10,8 @@ module.exports = {
     /**
      * Creates a router object that handles some core root level routes for
      * the application.
-     *
-     * @param {Object} app  A reference to the express application.
      */
-    createRouter: function(app) {
+    createRouter: function() {
         var router = _express.Router();
 
         /**
@@ -34,12 +32,12 @@ module.exports = {
          * Request for application status.
          */
         router.get('/__status', function(req, res) {
-            var appName = app.get('cfg_app_name');
-            var appVersion = app.get('cfg_app_version');
+            var appName = GLOBAL.config['cfg_app_name'];
+            var appVersion = GLOBAL.config['cfg_app_version'];
             res.set({
                 'Content-Type': 'application/json',
             });
-            res.send(200, {
+            res.status(200).send({
                 app: appName,
                 version: appVersion,
                 timestamp: Date.now()

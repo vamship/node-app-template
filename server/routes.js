@@ -10,7 +10,6 @@ var _path = require('path');
 var _express = require('express');
 var _favicon = require('serve-favicon');
 var _morgan = require('morgan');
-var _winston = require('winston');
 
 var _public = require('./routes/public');
 
@@ -24,14 +23,13 @@ module.exports = {
      * @param {Object} app  A reference to the express App object.
      */
     apply: function(app) {
-        var enableDynamicCss = app.get('cfg_enable_dyamic_css_compile');
+        var enableDynamicCss = GLOBAL.config['cfg_enable_dyamic_css_compile'];
+        var staticDir = GLOBAL.config['cfg_static_dir'];
+        var rootPath = GLOBAL.config['cfg_root_path'];
+        var mountPath = GLOBAL.config['cfg_mount_path'];
+        var staticFileCacheDuration = GLOBAL.config['cfg_static_file_cache_duration'];
 
-        var staticDir = app.get('cfg_static_dir');
-        var rootPath = app.get('cfg_root_path');
-        var mountPath = app.get('cfg_mount_path');
-        var staticFileCacheDuration = app.get('cfg_static_file_cache_duration');
-
-        var accessLogger = _winston.loggers.get('access');
+        var accessLogger = GLOBAL.getLogger('access');
         var winstonStream = {
             write: function(message, encoding) {
                 // We're piping from Morgan to Winston. There will be an extra
@@ -77,6 +75,6 @@ module.exports = {
         // Mount the routers at the specified base paths.
         forPath('/')
             .addHandler(_express.static(staticDir))
-            .addHandler(_public.createRouter(app));
+            .addHandler(_public.createRouter());
     }
 };
