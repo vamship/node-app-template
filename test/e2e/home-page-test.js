@@ -8,7 +8,6 @@ describe('Home page:', function() {
     var chai = require('chai');
     chai.use(require('chai-as-promised'));
     var expect = chai.expect;
-    var ptor = protractor.getInstance();
 
     var Page = function() {
         this.load = function() {
@@ -24,7 +23,7 @@ describe('Home page:', function() {
 
     describe('Page layout:', function() {
         it('should have a page title of "app-template"', function() {
-            expect(ptor.getTitle()).to.eventually.equal('app-template');
+            expect(browser.getTitle()).to.eventually.equal('app-template');
         });
 
         it('should have all the basic page elements', function() {
@@ -170,7 +169,7 @@ describe('Home page:', function() {
             }
 
             function _checkAlertDialog(expectedText, callback) {
-                var alertDialog = ptor.switchTo().alert();
+                var alertDialog = browser.switchTo().alert();
                 alertDialog.getText().then(function(text) {
                     expect(text.trim()).to.equal(expectedText);
                     alertDialog.accept();
