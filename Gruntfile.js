@@ -539,7 +539,7 @@ module.exports = function(grunt) {
          */
         watch: {
             allSources: {
-                files: [ SERVER.allFilesPattern(), TEST.allFilesPattern() ],
+                files: [ SERVER.allFilesPattern(), CLIENT.allFilesPattern(), TEST.allFilesPattern() ],
                 tasks: [ ]
             }
         },
