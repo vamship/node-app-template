@@ -7,7 +7,7 @@
     'use strict';
 
     var allTestFiles = [];
-    var TEST_REGEXP = /(spec|test)\.js$/i;
+    var TEST_REGEXP = /\/base\/test\/.*(spec|test)\.js$/i;
 
     var pathToModule = function(path) {
         return path.replace(/^\/base\//, '').replace(/\.js$/, '');
