@@ -5,20 +5,20 @@ define(['angular',
         'chaiAsPromised',
         'helloWorldModule'
     ],
-    function(angular,
-        angularMocks,
-        chaiAsPromised,
-        helloWorldModule) {
+    function(_angular,
+        _angularMocks,
+        _chaiAsPromised,
+        _helloWorldModule) {
 
         'use strict';
-        chai.use(chaiAsPromised);
+        chai.use(_chaiAsPromised);
         var expect = chai.expect;
 
         describe('helloWorldModule.GreetingController: ', function() {
             var $scope;
             var controller;
 
-            beforeEach(module(helloWorldModule));
+            beforeEach(module(_helloWorldModule));
 
             beforeEach(inject(['$rootScope', '$controller',
                 function($rootScope, $controller) {

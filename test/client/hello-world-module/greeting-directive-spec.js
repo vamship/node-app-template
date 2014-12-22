@@ -7,27 +7,27 @@ define(['angular',
         'mocks/test-fixture-module',
         'helloWorldModule'
     ],
-    function(angular,
-        angularMocks,
-        chaiAsPromised,
-        mouseHelper,
-        testFixtureModule,
-        helloWorldModule) {
+    function(_angular,
+        _angularMocks,
+        _chaiAsPromised,
+        _mouseHelper,
+        _testFixtureModule,
+        _helloWorldModule) {
 
         'use strict';
-        chai.use(chaiAsPromised);
+        chai.use(_chaiAsPromised);
         var expect = chai.expect;
 
         describe('helloWorldModule.greetingDirective: ', function() {
             var dirElement;
             var scope;
 
-            beforeEach(module(testFixtureModule));
-            beforeEach(module(helloWorldModule));
+            beforeEach(module(_testFixtureModule));
+            beforeEach(module(_helloWorldModule));
 
             beforeEach(inject(['$rootScope', '$compile',
                 function($rootScope, $compile) {
-                    dirElement = angular.element(
+                    dirElement = _angular.element(
                         '<div data-greeting-directive message="message" />');
                     scope = $rootScope.$new();
                     scope.message = {
@@ -200,7 +200,7 @@ define(['angular',
                     var salutationText = messageElement.children().eq(1);
 
                     expect(salutationText.text()).to.equal('Mr.');
-                    mouseHelper.click(salutationMs[0]);
+                    _mouseHelper.click(salutationMs[0]);
                     expect(salutationText.text()).to.equal('Ms.');
                 });
 

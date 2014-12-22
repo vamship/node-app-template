@@ -8,6 +8,9 @@ define([], function() {
     var mod = {
         /**
          * Simulates a click action on a specific element.
+         *
+         * @param {Element} el The element on whcih the click event will be
+         *                     simulated.
          */
         click: function(el) {
             var ev = document.createEvent("MouseEvent");
