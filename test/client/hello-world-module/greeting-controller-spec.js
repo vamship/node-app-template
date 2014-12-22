@@ -2,12 +2,16 @@
 /* global alert:true, chai:false, sinon:false */
 define(['angular',
         'ngMocks',
+        'chaiAsPromised',
         'helloWorldModule'
     ],
     function(angular,
         angularMocks,
+        chaiAsPromised,
         helloWorldModule) {
+
         'use strict';
+        chai.use(chaiAsPromised);
         var expect = chai.expect;
 
         describe('helloWorldModule.GreetingController: ', function() {

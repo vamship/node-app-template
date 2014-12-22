@@ -2,16 +2,20 @@
 /* global chai:false, sinon:false */
 define(['angular',
         'ngMocks',
+        'chaiAsPromised',
         'helpers/mouse',
         'mocks/test-fixture-module',
         'helloWorldModule'
     ],
     function(angular,
         angularMocks,
+        chaiAsPromised,
         mouseHelper,
         testFixtureModule,
         helloWorldModule) {
+
         'use strict';
+        chai.use(chaiAsPromised);
         var expect = chai.expect;
 
         describe('helloWorldModule.greetingDirective: ', function() {

@@ -351,6 +351,14 @@ module.exports = function(grunt) {
                             pattern: CLIENT.lib.getChildPath('angular-mocks/angular-mocks.js'),
                             included: false
                         },
+                        {
+                            pattern: CLIENT.lib.getChildPath('es5-shim/es5-shim.js'),
+                            included: false
+                        },
+                        {
+                            pattern: CLIENT.lib.getChildPath('chai-as-promised/lib/chai-as-promised.js'),
+                            included: false
+                        },
                         { pattern: CLIENT_BUILD.js.allFilesPattern('js'), included: false },
                         { pattern: TEST.client.allFilesPattern('js'), included: false },
                         { pattern: TEST.mocks.allFilesPattern(), included: false }

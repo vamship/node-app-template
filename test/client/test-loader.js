@@ -35,6 +35,8 @@
         paths: {
             // References required when testing dev and build artifacts.
             ngMocks: 'client/lib/angular-mocks/angular-mocks',
+            es5Shim: 'client/lib/es5-shim/es5-shim',
+            chaiAsPromised: 'client/lib/chai-as-promised/lib/chai-as-promised',
             mocks: 'test/mocks',
             helpers: 'test/client/helpers',
 
@@ -70,6 +72,11 @@
             ngMocks: {
                 deps: ['angular'],
                 exports: 'angular.mocks'
+            },
+            //Chai as promised is AMD compatible, but es5Shim is required to make
+            //it work with older js engines (like the one in phantomjs).
+            chaiAsPromised: {
+                deps: ['es5Shim']
             }
         },
 
