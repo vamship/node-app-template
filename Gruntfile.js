@@ -311,7 +311,10 @@ module.exports = function(grunt) {
                     moduleName: '_testFixtureModule'
                 },
                 coverageReporter: {
-                    type: 'text'
+                    reporters: [
+                        { type: 'text' },
+                        { type: 'html' }
+                    ]
                 },
                 basePath: '',
                 port: 9999,
