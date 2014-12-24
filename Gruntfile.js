@@ -318,7 +318,7 @@ module.exports = function(grunt) {
                 },
                 basePath: '',
                 port: 9999,
-                frameworks: ['mocha', 'requirejs', 'chai-sinon'],
+                frameworks: ['mocha', 'requirejs'],
                 singleRun: true,
                 autoWatch: false,
                 background: false,
@@ -352,6 +352,18 @@ module.exports = function(grunt) {
                         // be minified and loaded from the compiled build file.
                         {
                             pattern: CLIENT.lib.getChildPath('angular-mocks/angular-mocks.js'),
+                            included: false
+                        },
+                        {
+                            pattern: CLIENT.lib.getChildPath('chai/chai.js'),
+                            included: false
+                        },
+                        {
+                            pattern: CLIENT.lib.getChildPath('sinon/index.js'),
+                            included: false
+                        },
+                        {
+                            pattern: CLIENT.lib.getChildPath('sinon-chai/lib/sinon-chai.js'),
                             included: false
                         },
                         {

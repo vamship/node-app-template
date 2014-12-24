@@ -2,21 +2,28 @@
 /* global chai:false, sinon:false */
 define(['angular',
         'ngMocks',
+        'chai',
+        'sinon',
         'chaiAsPromised',
+        'sinonChai',
         'helpers/mouse',
         'mocks/test-fixture-module',
         'helloWorldModule'
     ],
     function(_angular,
         _angularMocks,
+        _chai,
+        _sinon,
         _chaiAsPromised,
+        _sinonChai,
         _mouseHelper,
         _testFixtureModule,
         _helloWorldModule) {
 
         'use strict';
-        chai.use(_chaiAsPromised);
-        var expect = chai.expect;
+        _chai.use(_sinonChai);
+        _chai.use(_chaiAsPromised);
+        var expect = _chai.expect;
 
         describe('helloWorldModule.greetingDirective: ', function() {
             var dirElement;

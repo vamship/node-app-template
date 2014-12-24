@@ -36,7 +36,10 @@
             // References required when testing dev and build artifacts.
             ngMocks: 'client/lib/angular-mocks/angular-mocks',
             es5Shim: 'client/lib/es5-shim/es5-shim',
+            chai: 'client/lib/chai/chai',
+            sinon: 'client/lib/sinon/index',
             chaiAsPromised: 'client/lib/chai-as-promised/lib/chai-as-promised',
+            sinonChai: 'client/lib/sinon-chai/lib/sinon-chai',
             mocks: 'test/mocks',
             helpers: 'test/client/helpers',
 

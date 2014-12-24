@@ -1,18 +1,25 @@
 /* jshint expr:true */
-/* global alert:true, chai:false, sinon:false */
+/* global alert:true */
 define(['angular',
         'ngMocks',
+        'sinon',
+        'chai',
         'chaiAsPromised',
+        'sinonChai',
         'helloWorldModule'
     ],
     function(_angular,
         _angularMocks,
+        _sinon,
+        _chai,
         _chaiAsPromised,
+        _sinonChai,
         _helloWorldModule) {
 
         'use strict';
-        chai.use(_chaiAsPromised);
-        var expect = chai.expect;
+        _chai.use(_sinonChai);
+        _chai.use(_chaiAsPromised);
+        var expect = _chai.expect;
 
         describe('helloWorldModule.GreetingController: ', function() {
             var $scope;
@@ -50,7 +57,7 @@ define(['angular',
                 var oldAlert;
                 beforeEach(function() {
                     oldAlert = window.alert;
-                    window.alert = sinon.spy();
+                    window.alert = _sinon.spy();
                 });
 
                 afterEach(function() {
