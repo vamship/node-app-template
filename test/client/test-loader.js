@@ -52,6 +52,7 @@
             angular: 'client/lib/angular/angular',
             uiRouter: 'client/lib/angular-ui-router/release/angular-ui-router',
             bootstrap: 'client/lib/bootstrap/dist/js/bootstrap',
+            q: 'client/lib/q/q',
             helloWorldModule: 'client/js/hello-world-module'
         },
 

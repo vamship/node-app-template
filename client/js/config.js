@@ -10,6 +10,7 @@
             angular: 'lib/angular/angular',
             uiRouter: 'lib/angular-ui-router/release/angular-ui-router',
             bootstrap: 'lib/bootstrap/dist/js/bootstrap',
+            q: 'lib/q/q',
 
             helloWorldModule: 'js/hello-world-module'
         },
