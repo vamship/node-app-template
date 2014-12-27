@@ -2,16 +2,16 @@
 /* global alert:true */
 define(['angular',
         'ngMocks',
-        'sinon',
         'chai',
+        'sinon',
         'chaiAsPromised',
         'sinonChai',
         'helloWorldModule'
     ],
     function(_angular,
         _angularMocks,
-        _sinon,
         _chai,
+        _sinon,
         _chaiAsPromised,
         _sinonChai,
         _helloWorldModule) {
