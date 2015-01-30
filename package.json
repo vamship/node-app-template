@@ -1,5 +1,5 @@
 {
-  "name": "app-template",
+  "name": "node-app-template",
   "version": "0.0.1",
   "description": "Starter template for web apps that use ExpressJS/Jade, RequireJS and AngularJS",
   "main": "index.js",

@@ -22,8 +22,8 @@ describe('Home page:', function() {
     });
 
     describe('Page layout:', function() {
-        it('should have a page title of "app-template"', function() {
-            expect(browser.getTitle()).to.eventually.equal('app-template');
+        it('should have a page title of "node-app-template"', function() {
+            expect(browser.getTitle()).to.eventually.equal('node-app-template');
         });
 
         it('should have all the basic page elements', function() {
