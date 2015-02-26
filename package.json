@@ -51,7 +51,8 @@
     "wysknd-lib": "git+https://github.com/vamship/wysknd-lib.git#v0.0.2"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/vamship/node-app-template.git"
   },
   "dependencies": {
     "express": "^4.1.2",
