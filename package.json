@@ -1,5 +1,5 @@
 {
-  "name": "node-app-template",
+  "name": "node-app-template-amd",
   "version": "0.0.1",
   "description": "Starter template for web apps that use ExpressJS/Jade, RequireJS and AngularJS",
   "main": "index.js",
@@ -52,7 +52,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vamship/node-app-template.git"
+    "url": "https://github.com/vamship/node-app-template-amd.git"
   },
   "dependencies": {
     "express": "^4.1.2",
