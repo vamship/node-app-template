@@ -16,7 +16,7 @@ describe('/', function() {
 
                 var payload = res.body;
                 expect(payload).to.be.defined;
-                expect(payload.app).to.equal('node-app-template');
+                expect(payload.app).to.equal('node-app-template-amd');
                 expect(payload.version).to.be.a('string');
                 expect(payload.timestamp).to.be.a('number');
                 done();
