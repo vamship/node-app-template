@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/vamship/node-app-template-amd.svg?branch=master)](https://travis-ci.org/vamship/node-app-template-amd)
+> NOTE: As of March 31, 2014, support for this template is being discontinued, in favor of [node-app-template-cjs](https://github.com/vamship/node-app-template-cjs.git). I believe that using CJS and Browserify makes the development process significantly simpler, with the only tradeoff being that a separate build step is required to prepare client side javascript files for the browser. From my perspective, the simplicity is a clear winner.
+
 ## App Template
 
 This is a sample application template, for web applications that run on the [Node JS](http://nodejs.org) platform. This template uses the following technologies:
