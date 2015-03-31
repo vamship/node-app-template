@@ -10,8 +10,7 @@
     "stop": "forever stop server/server.js",
     "test": "grunt"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Vamshi K Ponnapalli",
   "devDependencies": {
     "chai-as-promised": "^4.1.1",
@@ -64,5 +63,10 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/vamship/node-app-template-amd/issues"
+  },
+  "homepage": "https://github.com/vamship/node-app-template-amd",
+  "license": "ISC"
 }
